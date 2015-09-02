@@ -23,7 +23,7 @@ module.exports = require('./make-webpack-config')({
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        BUDGETING_API_URL: JSON.stringify(process.env.BUDGETING_API_URL || 'http://localhost:9292')
+        SERVICE_API_URL: JSON.stringify(process.env.BUDGETING_API_URL || 'http://localhost:9292')
       }
     }),
     new webpack.HotModuleReplacementPlugin()

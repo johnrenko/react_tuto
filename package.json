@@ -1,7 +1,7 @@
 {
-  "name": "Budgets",
+  "name": "Service name here",
   "version": "1.0.0",
-  "description": "Budgets frontend",
+  "description": "MYOB React Starter Template",
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
