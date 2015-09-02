@@ -19,6 +19,8 @@ module.exports = function(options) {
     reporters = reporters.concat(['coverage', 'threshold']);
   }
 
+  var thresholdReporter = options.thresholdReporter || {};
+
   return {
     browsers: [
       'PhantomJS'
@@ -56,12 +58,7 @@ module.exports = function(options) {
       ]
     },
 
-    thresholdReporter: {
-      statements: 100,
-      branches: 100,
-      functions: 100,
-      lines: 100
-    },
+    thresholdReporter: thresholdReporter,
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
