@@ -1,23 +1,16 @@
 "use strict";
 
-var webpack = require('webpack');
-var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CompressionPlugin = require("compression-webpack-plugin");
 
 var defaultLoaders = [
-  {
-    //tell webpack to use jsx-loader for all *.jsx files
-    test: /\.js?$/,
-    exclude: /node_modules/,
-    loader: 'jsx-loader?insertPragma=React.DOM&harmony'
-  },
-
-  {
-    test: /\.js?$/,
-    exclude: /node_modules/,
-    loader: 'babel'
-  }
+  {test: /\.jsx$/, exclude: /node_modules/, loaders: ['react-hot', 'babel']},
+  {test: /\.js?$/, exclude: /node_modules/, loader: 'babel'},
+  {test: /\.woff(2)?(\?)?(.+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff&name=/fonts/[name].[ext]'},
+  {test: /\.ttf(\?)?(.+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream&name=/fonts/[name].[ext]'},
+  {test: /\.eot(\?)?(.+)?$/, loader: 'file?name=/fonts/[name].[ext]'},
+  {test: /\.svg(\?)?(.+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml&name=/fonts/[name].[ext]'},
+  {test: /\.(png|cur)$/, loader: 'file?name=/images/[name].[ext]'}
 ];
 
 module.exports = function(options) {
@@ -28,10 +21,15 @@ module.exports = function(options) {
   var plugins = options.plugins;
 
   if (options.separateStylesheet) {
-    loaders = loaders.concat({test: /\.scss$/, loader: ExtractTextPlugin.extract('css?sourceMap!' + 'sass?sourceMap')});
-    plugins = plugins.concat(new ExtractTextPlugin('[name].[contenthash].css'));
+    loaders = loaders.concat(
+      {test: /\.scss$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('css?sourceMap!sass?sourceMap')},
+      {test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css')}
+    );
   } else {
-    loaders = loaders.concat({test: /\.scss$/, exclude: /node_modules/, loader: 'style!css!sass'});
+    loaders = loaders.concat(
+      {test: /\.scss$/, exclude: /node_modules/, loader: 'style!css!sass'},
+      {test: /\.css$/, loader: 'style!css'}
+    );
   }
 
   if (options.compress) {
@@ -49,15 +47,20 @@ module.exports = function(options) {
 
     loaders: loaders,
 
-    noParse: /\.min\.js/
+    noParse: []
   };
 
   var resolve = {
-    extensions: ['', '.js']
+    extensions: ['', '.js'],
+    alias: options.alias
   };
 
   var devtool = options.devtool;
 
+  var addVendor = function (name, path) {
+    this.resolve.alias[name] = path;
+    this.module.noParse.push(new RegExp(path));
+  };
 
   return {
     entry: entry,
@@ -66,6 +69,7 @@ module.exports = function(options) {
     module: module,
     resolve: resolve,
     devtool: devtool,
-    plugins: plugins
+    plugins: plugins,
+    addVendor: addVendor
   };
 };
