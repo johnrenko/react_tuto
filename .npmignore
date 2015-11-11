@@ -1,0 +1,10 @@
+coverage/
+examples/
+src/
+scripts/
+tests/
+tmp/
+.babelrc
+.editorconfig
+.eslintrc
+.gitattributes
