@@ -4,6 +4,7 @@ src/
 scripts/
 tests/
 tmp/
+.idea/
 .babelrc
 .editorconfig
 .eslintrc
