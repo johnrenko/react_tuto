@@ -11,8 +11,7 @@ const webpack = require('webpack'),
   CompressionPlugin = require('compression-webpack-plugin'),
   autoprefixer = require('autoprefixer'),
   processLibs = require('./webpack-libs'),
-  path = require('path'),
-  assign = require('react/lib/Object.assign');
+  path = require('path');
 
 const rootPath = path.join(__dirname, '..'),
   modulesPath = path.join(rootPath, 'node_modules'),
@@ -67,7 +66,7 @@ module.exports = function(options) {
   };
 
   // Merge in default config with options
-  assign(config, options || {});
+  Object.assign(config, options || {});
 
   // Minimum loaders and plugins
   config.module.loaders = config.module.loaders.concat(defaultLoaders);

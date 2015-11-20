@@ -5,8 +5,7 @@
 'use strict';
 
 const webpack = require('webpack'),
-  path = require('path'),
-  assign = require('react/lib/Object.assign');
+  path = require('path');
 
 const rootPath = path.join(__dirname, '..'),
   modulesPath = path.join(rootPath, 'node_modules');
@@ -81,12 +80,12 @@ module.exports = function processLibs(config) {
 
   // Libraries aliases
   config.resolve.alias = config.resolve.alias || {};
-  assign(config.resolve.alias, aliases);
+  Object.assign(config.resolve.alias, aliases);
 
   // Not parsed by Webpack
   config.module.noParse = config.module.noParse ?  config.module.noParse.concat(excluded): excluded;
 
   // Libraries as external dependencies (not bundled)
   config.externals = config.externals || {};
-  assign(config.externals, externals);
+  Object.assign(config.externals, externals);
 };
