@@ -10,5 +10,6 @@ import 'babel-core/external-helpers';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HelloWorld from './components/HelloWorld';
+import Button from './components/Button';
 
 ReactDOM.render(<HelloWorld />, document.getElementById('container'));

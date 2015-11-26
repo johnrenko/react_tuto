@@ -5,21 +5,27 @@
 'use strict';
 
 import React from 'react';
+import Button from './Button.js'
 
 class HelloWorld extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {input: 'My Button'};
+    this._handleChange = this._handleChange.bind(this);
+  }
+
+  _handleChange(){
+    this.setState({
+      input: event.target.value
+    });
+  }
+
   render() {
-    return (
-      <section className="container-fluid">
-        <h1>Hello World!!!</h1>
-        <div className="row">
-          <div className="col-xs-12">
-            <h3 className="myob-icon-comments"> Welcome to React !</h3>
-          </div>
-          <div className="col-xs-12">
-            <div className="alert alert-success">Successfully running MYOB styles as well !</div>
-          </div>
-        </div>
-      </section>
+    return ( 
+      <div>
+        <input onChange={this._handleChange}/>
+        <Button name={this.state.input} />
+      </div>
     );
   }
 }
