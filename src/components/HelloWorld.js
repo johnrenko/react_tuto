@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react';
-import Button from './Button.js'
+import Button from './Button.js';
 
 class HelloWorld extends React.Component {
   constructor(props) {
@@ -14,16 +14,16 @@ class HelloWorld extends React.Component {
     this._handleChange = this._handleChange.bind(this);
   }
 
-  _handleChange(){
+  _handleChange() {
     this.setState({
       input: event.target.value
     });
   }
 
   render() {
-    return ( 
+    return (
       <div>
-        <input onChange={this._handleChange}/>
+        <input className="form-control" onChange={this._handleChange}/>
         <Button name={this.state.input} />
       </div>
     );
